@@ -2,8 +2,10 @@
 import axios from 'axios';
 import { generales } from './generales';
 
+export const STORAGE = 'token';
+
 const axiosInstance = axios.create({
-  baseURL: generales.baseUrldev,
+  baseURL: `${generales.baseUrldev}/api/v1`,
 });
 
 axiosInstance.interceptors.response.use(
@@ -30,7 +32,7 @@ export const setTokenHeader = (token) => {
   axiosInstance.defaults.headers.common.Authorization = token;
 };
 
-const user = JSON.parse(localStorage.getItem('token') || '{}');
+const user = JSON.parse(localStorage.getItem(STORAGE) || sessionStorage.getItem(STORAGE) || '{}');
 
 setTokenHeader(user.token || '');
 

@@ -1,75 +1,68 @@
-/* eslint-disable import/prefer-default-export */
 import React from 'react';
-import Estatus from '../../componentes/Estatus/component';
+import PropTypes from 'prop-types';
+
 import Table from '../../componentes/Table';
+import Estatus from '../../componentes/Estatus/component';
 
-import { TiposDuracion } from '../../helpers/constants';
-import { RequestHttp } from '../../helpers';
-import endpoints, { ACTIVIDADES } from '../../configuracion/endpoints';
-
-const getEstado = (value) => TiposDuracion.find((estado) => estado.id === value)?.nombre || '';
+import { ACTIVIDADES } from '../../configuracion/endpoints';
 
 const columns = [
   {
     field: 'nombre',
     headerName: 'NOMBRE',
-    width: 330,
+    flex: 1,
+    minWidth: 330,
     editable: false,
   },
   {
     field: 'tipoActividad',
     headerName: 'TIPO DE ACTIVIDAD',
-    width: 160,
+    flex: 1,
+    minWidth: 160,
     editable: false,
     valueGetter: ({ value }) => value?.nombre || '',
   },
   {
-    field: 'semestre',
-    headerName: 'SEMESTRE',
-    width: 95,
+    field: 'calificacion',
+    headerName: 'CALIFICACIÓN',
+    flex: 1,
+    minWidth: 130,
     editable: false,
   },
   {
-    field: 'duracion',
-    headerName: 'DURACIÓN',
-    width: 100,
-    editable: false,
-    valueGetter: ({ row }) => `${row.duracion} ${getEstado(row.tipoDuracion)}`,
-  },
-  {
-    field: 'minPuntos',
-    headerName: 'MIN PUNTOS',
-    width: 130,
-    editable: false,
-  },
-  {
-    field: 'maxPuntos',
-    headerName: 'MAX PUNTOS',
-    width: 140,
+    field: 'maximoUnidades',
+    headerName: 'MAX UNIDADES',
+    flex: 1,
+    minWidth: 140,
     editable: false,
   },
   {
     field: 'estatus',
     headerName: 'ESTATUS',
-    width: 100,
+    flex: 1,
+    minWidth: 100,
     editable: false,
     renderCell: ({ value, index }) => <Estatus key={index} value={value} />,
   },
 ];
 
-export const Actividades = () => {
-  const uri = RequestHttp({ endpoint: endpoints.actividades.base });
-  return (
-    <Table
-      name="actividades"
-      uri={uri.get}
-      uriDelete={uri.remove}
-      title="Catálogo de actividades"
-      subtitle="Módulo para consultar actividades"
-      columns={columns}
-      height={370}
-      showHeader
-      showActions
-    />
-  );
+export const Actividades = ({ editar }) => (
+  <Table
+    name="actividades"
+    uri={ACTIVIDADES}
+    title="Catálogo de actividades"
+    subtitle="Módulo para consultar actividades"
+    columns={columns}
+    height={370}
+    showHeader
+    showActions={editar}
+  />
+);
+
+Actividades.propTypes = {
+  editar: PropTypes.bool,
+};
+
+Actividades.defaultProps = {
+  editar: true,
 };

@@ -1,18 +1,17 @@
-/* eslint-disable import/prefer-default-export */
 import { Box } from '@mui/material';
+import { grey } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 
-export const Container = styled(Box)(({ height }) => ({
-  height: height || 480,
+export const Container = styled(Box)(({ height, theme }) => ({
+  height,
   width: '100%',
   '& .MuiDataGrid-columnHeaderTitle': {
     fontWeight: 700,
-    fontSize: 12,
-    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
   },
   '& .MuiDataGrid-columnHeaders': {
-    backgroundColor: '#E9EEFA',
-    color: '#212121',
+    // backgroundColor: theme.palette.primary.main,
+    backgroundColor: '#BE8B3C',
+    color: theme.palette.secondary.main,
   },
   '& .MuiDataGrid-row': {
     width: '100%',
@@ -20,27 +19,9 @@ export const Container = styled(Box)(({ height }) => ({
     background: '#f8f9fc',
   },
   '& .MuiDataGrid-cell': {
-    fontWeight: 500,
-    fontSize: 12,
-    lineHeight: '17px',
-    color: '#212121',
+    fontWeight: 600,
+    color: grey[600],
     boxSizing: 'none',
     borderBottom: 'none',
-    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-  },
-  '& .MuiDataGrid-iconSeparator': {
-    display: 'none',
-    border: 'none',
-  },
-  '& .MuiDataGrid-cell:focus': {
-    outline: 'red',
-  },
-  '& .MuiDataGrid-root': {
-    '& .MuiDataGrid-colCell:focus': {
-      outline: 'none',
-    },
-  },
-  '& .MuiDataGrid-columnHeader--sortable:': {
-    outline: 'none',
   },
 }));

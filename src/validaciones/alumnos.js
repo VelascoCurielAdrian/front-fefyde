@@ -1,9 +1,8 @@
 import * as yup from 'yup';
-import { isNaN } from 'lodash';
 
 import { EMAIL_INVALID, MESSAGE_REQUIRED } from '../helpers/constants';
 import axios from '../configuracion/axios';
-import endpoints from '../configuracion/endpoints';
+import endpoints, { GRUPOS } from '../configuracion/endpoints';
 
 const CREATE = (body) => axios.post(endpoints.alumnos.base(), body);
 
@@ -25,6 +24,8 @@ export const GET_CICLO = () => axios.get(endpoints.cicloEscolar.base());
 
 export const GET_GRUPO = () => axios.get(endpoints.grupos.base());
 
+export const GET_GRUPO_ASIGNADOS = () => axios.get(endpoints.base.url(`${GRUPOS}/asignados`));
+
 export const GET_CARRERA = () => axios.get(endpoints.carrera.base());
 
 export const Validacion = yup.object({
@@ -33,34 +34,13 @@ export const Validacion = yup.object({
   apellidoPaterno: yup.string().required(MESSAGE_REQUIRED),
   apellidoMaterno: yup.string().required(MESSAGE_REQUIRED),
   correo: yup.string().email(EMAIL_INVALID).required(MESSAGE_REQUIRED),
-  fechaNacimiento: yup.string().required(MESSAGE_REQUIRED),
-  telefonoFijo: yup
-    .number()
-    .required(MESSAGE_REQUIRED),
-  telefonoCelular: yup
-    .number()
-    .required(MESSAGE_REQUIRED),
-  cicloEscolarID: yup
-    .number()
-    .transform((value) => (isNaN(value) ? undefined : value))
-    .required(MESSAGE_REQUIRED),
-  carreraID: yup
-    .number()
-    .transform((value) => (isNaN(value) ? undefined : value))
-    .required(MESSAGE_REQUIRED),
-  semestre: yup.string().required(MESSAGE_REQUIRED),
-  grupoID: yup
-    .number()
-    .transform((value) => (isNaN(value) ? undefined : value))
-    .required(MESSAGE_REQUIRED),
-  edad: yup
-    .number()
-    .transform((value) => (isNaN(value) ? undefined : value))
-    .required(MESSAGE_REQUIRED),
-  genero: yup
-    .number()
-    .transform((value) => (isNaN(value) ? undefined : value))
-    .required(MESSAGE_REQUIRED),
+  telefonoFijo: yup.string().required(MESSAGE_REQUIRED),
+  telefonoCelular: yup.string().required(MESSAGE_REQUIRED),
+  grupoID: yup.string().required(MESSAGE_REQUIRED),
+});
+
+export const ValidacionMultiples = yup.object({
+  grupoID: yup.string().required(MESSAGE_REQUIRED),
 });
 
 export const AlumnosActions = {

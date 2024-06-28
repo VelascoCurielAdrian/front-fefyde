@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import { useNavigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
+import { useQueryClient } from '@tanstack/react-query';
 import { AuthContext } from '../../configuracion/auth';
 
 import AppBar from './appbar';
@@ -13,12 +14,14 @@ const drawerWidth = 240;
 
 const DashBoard = ({ window, children }) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const { logout, user } = useContext(AuthContext);
 
   const onLogout = () => {
     logout();
+    queryClient.clear();
     navigate('/login', {
       replace: true,
     });
@@ -67,7 +70,7 @@ const DashBoard = ({ window, children }) => {
       <Box
         component="main"
         sx={{
-          flexGrow: 1, paddingRight: 3, width: '100%', height: '100%',
+          flexGrow: 1,
         }}
         className="container"
       >

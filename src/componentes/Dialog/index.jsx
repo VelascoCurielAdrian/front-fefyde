@@ -1,16 +1,20 @@
 import React, { forwardRef } from 'react';
+
 import PropTypes from 'prop-types';
-import { FiSave } from 'react-icons/fi';
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
+import CancelIcon from '@mui/icons-material/Cancel';
+import AddIcon from '@mui/icons-material/Add';
 import Slide from '@mui/material/Slide';
-import { GiCancel } from 'react-icons/gi';
 import DialogMui from '@mui/material/Dialog';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
-import { FaRegWindowClose } from 'react-icons/fa';
 import DialogTitleMui from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import { DialogActions, useMediaQuery, useTheme } from '@mui/material';
+import {
+  DialogActions, LinearProgress,
+  useMediaQuery, useTheme,
+} from '@mui/material';
 
 import Button from '../Button';
 
@@ -23,7 +27,7 @@ const DialogCustom = styled(DialogMui)(({ theme }) => ({
   },
 }));
 
-const Transition = forwardRef((props, ref) => <Slide direction="down" ref={ref} {...props} />);
+const Transition = forwardRef((props, ref) => <Slide direction="left" ref={ref} {...props} />);
 
 const DialogTitle = (props) => {
   const { children, onClose, ...other } = props;
@@ -41,10 +45,11 @@ const DialogTitle = (props) => {
           aria-label="close"
           onClick={onClose}
           sx={{
-            position: 'absolute', right: 8, top: 8, color: (theme) => theme.palette.grey[500],
+            position: 'absolute', right: 8, top: 16,
           }}
+          color="primary"
         >
-          <FaRegWindowClose size={30} />
+          <CancelPresentationIcon fontSize="large" />
         </IconButton>
       ) : null}
     </DialogTitleMui>
@@ -60,6 +65,7 @@ const Dialog = ({
   onClose,
   open,
   title,
+  loading,
   subtitle,
   children,
   actions,
@@ -82,28 +88,31 @@ const Dialog = ({
       aria-labelledby="customized-dialog-title"
       open={open}
     >
-      <DialogTitle id="title" onClose={onClose}>
+      {loading && (<LinearProgress color="info" />)}
+      <DialogTitle id="title" onClose={onClose} className="justify-center align-text-bottom text-xs">
         {title}
       </DialogTitle>
       <DialogContent dividers>
-        <DialogContentText id="alert-dialog-description">
+        <DialogContentText
+          id="alert-dialog-description"
+          className="justify-center text-black"
+        >
           {subtitle}
         </DialogContentText>
         {children}
       </DialogContent>
       {actions && (
-      <DialogActions sx={{ marginRight: 2 }}>
+      <DialogActions>
         <Button
           onClick={actionCancel}
           label="Cancelar"
-          fullWidth
-          icono={<GiCancel size={16} />}
+          variant="outlined"
+          icono={<CancelIcon />}
         />
         <Button
           onClick={(e) => { handleSubmit(actionSave)(e); }}
           label={labelButtonSave}
-          fullWidth
-          icono={<FiSave size={16} />}
+          icono={<AddIcon />}
         />
       </DialogActions>
       )}
@@ -123,6 +132,7 @@ Dialog.propTypes = {
   title: PropTypes.string.isRequired,
   labelButtonSave: PropTypes.string,
   actions: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 Dialog.defaultProps = {
@@ -132,6 +142,7 @@ Dialog.defaultProps = {
   maxWidth: 'xl',
   subtitle: '',
   actions: false,
+  loading: false,
   labelButtonSave: 'Guardar',
 };
 

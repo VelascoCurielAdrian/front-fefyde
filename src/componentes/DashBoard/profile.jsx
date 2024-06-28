@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import propTypes from 'prop-types';
 import List from '@mui/material/List';
@@ -6,28 +6,26 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemButton from '@mui/material/ListItemButton';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import NoAccountsIcon from '@mui/icons-material/NoAccounts';
+import SettingsIcon from '@mui/icons-material/Settings';
 
-import { BiLogIn } from 'react-icons/bi';
-import { FcSettings, FcBusinessman, FcGraduationCap } from 'react-icons/fc';
-import { PermisosUsuario } from '../../helpers';
+import { AuthContext } from '../../configuracion/auth';
 
 const Perfil = ({ onLogout }) => {
-  const { esAdministrador, usuario } = PermisosUsuario();
+  const { user } = useContext(AuthContext);
 
   return (
     <List>
-      <ListItem disablePadding>
+      <ListItem disablePadding color="primary">
         <ListItemButton>
-          <ListItemIcon>
-            {esAdministrador ? (
-              <FcBusinessman size={26} />
-            ) : (
-              <FcGraduationCap size={26} />
-            )}
+          <ListItemIcon color="primary">
+            <AdminPanelSettingsIcon size={26} color="primary" />
           </ListItemIcon>
           <ListItemText
-            primary={usuario}
-            secondary={esAdministrador ? 'Administrador' : 'Estudiante'}
+            color="primary"
+            primary="Perfíl"
+            secondary={user.perfil}
           />
         </ListItemButton>
       </ListItem>
@@ -38,9 +36,10 @@ const Perfil = ({ onLogout }) => {
       >
         <ListItemButton>
           <ListItemIcon>
-            <FcSettings size={26} />
+            <SettingsIcon size={26} color="primary" />
           </ListItemIcon>
           <ListItemText
+            color="primary"
             primary="Configuración"
             secondary="Información personal"
           />
@@ -49,9 +48,9 @@ const Perfil = ({ onLogout }) => {
       <ListItem disablePadding>
         <ListItemButton onClick={onLogout}>
           <ListItemIcon>
-            <BiLogIn size={26} />
+            <NoAccountsIcon size={26} color="primary" />
           </ListItemIcon>
-          <ListItemText primary="Cerrar Sessión" />
+          <ListItemText color="primary" primary="Cerrar Sessión" />
         </ListItemButton>
       </ListItem>
     </List>

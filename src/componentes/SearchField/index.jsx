@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import propTypes from 'prop-types';
-import { FaSearch } from 'react-icons/fa';
+import MdEdit from '@mui/icons-material/Edit';
+
 import { Component, SearchIcon, SearchInput } from './styles';
 
 const SearchField = ({ fullWidth }) => {
@@ -15,7 +16,7 @@ const SearchField = ({ fullWidth }) => {
   return (
     <Component>
       <SearchIcon>
-        <FaSearch />
+        <MdEdit />
       </SearchIcon>
       <SearchInput
         size="large"

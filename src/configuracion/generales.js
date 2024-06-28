@@ -3,9 +3,9 @@ import { toast } from 'react-toastify';
 import { ERROR } from './mensajes';
 
 export const generales = {
-  baseUrldev: 'http://localhost:4001/api/v1',
-  // baseUrldev: 'http://192.168.1.53:4001/api/v1',
-  // baseUrlProd: 'http://localhost:4001/api/v1',
+  // baseUrldev: 'http://localhost:4001',
+  // ip del servidor
+  baseUrldev: 'https://sistemasfic.uas.edu.mx',
   admin: 'Administrador',
   carrera: 'Carrera',
   student: 'Estudiante',
@@ -20,12 +20,6 @@ export const queryClient = new QueryClient({
       refetchInterval: false,
       refetchIntervalInBackground: false,
       onError: () => toast.error(ERROR),
-      networkMode: 'always',
-    },
-    mutations: {
-      networkMode: 'always',
-      retry: 3,
-      timeout: 10000, // 10 segundos
     },
   },
 });

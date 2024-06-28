@@ -2,70 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { LinearProgress } from '@mui/material';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
-
-import { MdFilterAlt } from 'react-icons/md';
 import { Container } from './styles';
 import CustomPagination from '../Pagination';
 import EmptyRows from '../EmptyRows/component';
-import Button from '../Button';
 
 const TableBase = ({
-  data,
-  registrosPorPagina,
-  countData,
-  title,
-  error,
-  loading,
-  columns,
-  filtros,
-  iconFileImport,
-  fileImport,
-  autoHeight,
-  handleFilter,
-  showPaginate,
-  headerHeight,
-  titleFileImport,
-  handleFileImport,
-  onChangePaginado,
-  onPageChange,
+  data, registrosPorPagina,
+  countData, error, loading,
+  columns, autoHeight, showPaginate,
+  onChangePaginado, onPageChange, headerHeight,
 }) => (
   <div className="md:col-span-2 md:mt-0 mb-8">
-    <div className="overflow-hidden shadow sm:rounded-md">
-      <div className="bg-white px-4 py-5 sm:p-6 h-140">
+    <div className="bg-slate-200 overflow-hidden rounded-2xl">
+      <div className="px-4 py-5 sm:p-6 h-100">
         <div className="col-span-12">
           <Container>
-            <label
-              htmlFor="label-form"
-              className="block mb-2 text-sm  text-gray-500"
-            >
-              {title}
-            </label>
-            <div className="grid grid-cols-12 gap-2 mb-2">
-              {fileImport && (
-                <div className="col-span-12 lg:col-span-3 md:col-span-4 sm:col-span-4">
-                  <Button
-                    size="medium"
-                    label={titleFileImport}
-                    fullWidth
-                    className="bg-gray-700"
-                    onClick={handleFileImport}
-                    icono={iconFileImport}
-                  />
-                </div>
-              )}
-              {filtros && (
-                <div className="col-span-12 lg:col-span-2 md:col-span-4 sm:col-span-4">
-                  <Button
-                    size="medium"
-                    label="Filtros"
-                    fullWidth
-                    className="bg-gray-700"
-                    onClick={handleFilter}
-                    icono={<MdFilterAlt size={20} />}
-                  />
-                </div>
-              )}
-            </div>
             <DataGrid
               error={error}
               columns={columns}
@@ -74,8 +25,8 @@ const TableBase = ({
               rowCount={countData}
               onPaginationModelChange={onChangePaginado}
               hideFooterSelectedRowCount
-              pageSize={registrosPorPagina}
               autoHeight={autoHeight}
+              pageSize={registrosPorPagina}
               headerHeight={headerHeight}
               loading={loading}
               pagination
@@ -102,7 +53,6 @@ const TableBase = ({
 
 TableBase.propTypes = {
   error: PropTypes.bool,
-  title: PropTypes.string,
   autoHeight: PropTypes.bool,
   countData: PropTypes.number,
   registrosPorPagina: PropTypes.number,
@@ -110,13 +60,7 @@ TableBase.propTypes = {
   headerHeight: PropTypes.number,
   data: PropTypes.oneOfType([PropTypes.array]),
   columns: PropTypes.oneOfType([PropTypes.array]),
-  fileImport: PropTypes.bool,
-  titleFileImport: PropTypes.string,
-  iconFileImport: PropTypes.element,
-  handleFileImport: PropTypes.func,
-  filtros: PropTypes.bool,
   loading: PropTypes.bool,
-  handleFilter: PropTypes.func,
   onChangePaginado: PropTypes.func,
   onPageChange: PropTypes.func,
 };
@@ -124,7 +68,6 @@ TableBase.propTypes = {
 TableBase.defaultProps = {
   columns: [],
   data: [],
-  title: '',
   countData: 0,
   registrosPorPagina: 5,
   autoHeight: false,
@@ -133,13 +76,7 @@ TableBase.defaultProps = {
   error: false,
   loading: false,
   onChangePaginado: () => {},
-  fileImport: false,
-  titleFileImport: '',
-  iconFileImport: null,
-  handleFileImport: () => {},
   onPageChange: () => {},
-  filtros: false,
-  handleFilter: () => {},
 };
 
 export default TableBase;

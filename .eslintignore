@@ -1,0 +1,5 @@
+vite.config.js
+/node_modules
+/public
+.gitignore
+index.html

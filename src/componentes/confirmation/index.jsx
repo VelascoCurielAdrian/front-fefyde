@@ -1,9 +1,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { GiCancel } from 'react-icons/gi';
 import { styled } from '@mui/material/styles';
-import { MdDeleteForever } from 'react-icons/md';
 import { Popover, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CancelOutlined from '@mui/icons-material/CancelOutlined';
 
 import ButtonCustomized from '../Button';
 
@@ -37,15 +37,16 @@ const Copmponent = ({
     <Actions>
       <ButtonCustomized
         size="small"
+        variant="outlined"
         label="Cancelar"
         onClick={handleClose}
-        icono={<GiCancel />}
+        icono={<CancelOutlined />}
       />
       <ButtonCustomized
         size="small"
         label="Aceptar"
         onClick={handleDelete}
-        icono={<MdDeleteForever />}
+        icono={<DeleteIcon />}
       />
     </Actions>
   </Popover>

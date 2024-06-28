@@ -7,7 +7,7 @@ const Copyright = (props) => (
     {'Copyright © '}
     <Link
       color={props?.color}
-      href="https://virtual.uas.edu.mx/centro/esef/"
+      href="https://fic.uas.edu.mx/"
       rel="noopener noreferrer"
       target="_blank"
     >

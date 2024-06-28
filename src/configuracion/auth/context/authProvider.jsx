@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import React, { useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,7 +6,7 @@ import { authReducer } from './authReducer';
 import { types } from '../types';
 
 const init = () => {
-  const user = JSON.parse(localStorage.getItem('token'));
+  const user = JSON.parse(localStorage.getItem('token') || sessionStorage.getItem('token'));
   return {
     logged: !!user,
     user,
@@ -19,12 +18,17 @@ export const AuthProvider = ({ children }) => {
   const login = (response) => {
     const usuario = { ...response };
     const action = { type: types.login, payload: usuario };
-    localStorage.setItem('token', JSON.stringify(usuario));
+    if (response.typeSession) {
+      localStorage.setItem('token', JSON.stringify(usuario));
+    } else {
+      sessionStorage.setItem('token', JSON.stringify(usuario));
+    }
     dispatch(action);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     const action = { type: types.logout };
     dispatch(action);
   };

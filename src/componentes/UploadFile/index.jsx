@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
+import { getFilePlugin } from '@react-pdf-viewer/get-file';
+import { Viewer } from '@react-pdf-viewer/core';
 
 const baseStyle = {
   flex: 1,
@@ -10,7 +12,7 @@ const baseStyle = {
   padding: '20px',
   borderWidth: 2,
   borderRadius: 2,
-  borderColor: '#eeeeee',
+  borderColor: 'rgba(0, 0, 0, 0.23)',
   borderStyle: 'dashed',
   backgroundColor: '#fafafa',
   color: '#bdbdbd',
@@ -31,43 +33,42 @@ const rejectStyle = {
 };
 
 const Component = ({
-  title, subtitle, type, multiple,
+  title, subtitle, multiple, fileSelected, onDrop, fileUrl, disabled,
 }) => {
+  const getFilePluginInstance = getFilePlugin();
   const {
-    getRootProps,
-    getInputProps,
-    isFocused,
-    isDragAccept,
-    acceptedFiles,
-    isDragReject,
-  } = useDropzone({ accept: { [type]: [] }, multiple });
+    getRootProps, getInputProps, isFocused, isDragAccept, isDragReject,
+  } = useDropzone({
+    accept: {
+      'aplication/pdf': ['.pdf'],
+    },
+    multiple,
+    onDrop,
+    disabled,
+  });
 
-  const style = useMemo(() => ({
-    ...baseStyle,
-    ...(isFocused ? focusedStyle : {}),
-    ...(isDragAccept ? acceptStyle : {}),
-    ...(isDragReject ? rejectStyle : {}),
-  }), [
-    isFocused,
-    isDragAccept,
-    isDragReject,
-  ]);
-
-  const filesPreview = acceptedFiles.map((file) => (
-    <li key={file.path}>
-      {file.path}
-    </li>
-  ));
+  const style = useMemo(
+    () => ({
+      ...baseStyle,
+      ...(isFocused ? focusedStyle : {}),
+      ...(isDragAccept ? acceptStyle : {}),
+      ...(isDragReject ? rejectStyle : {}),
+    }),
+    [isFocused, isDragAccept, isDragReject],
+  );
 
   return (
     <div className="containerDropzone">
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
-        <p>{ title }</p>
-        <p>{ subtitle }</p>
-        <aside>
-          <p className="file">{filesPreview}</p>
-        </aside>
+        <p className="text-center">{title}</p>
+        <p className="text-center">{subtitle}</p>
+        {fileSelected && (
+          <Viewer
+            fileUrl={fileUrl}
+            plugins={[getFilePluginInstance]}
+          />
+        )}
       </div>
     </div>
   );
@@ -76,15 +77,22 @@ const Component = ({
 Component.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
+  fileUrl: PropTypes.string,
   type: PropTypes.string,
   multiple: PropTypes.bool,
+  disabled: PropTypes.bool,
+  fileSelected: PropTypes.oneOfType([PropTypes.any]),
+  onDrop: PropTypes.func.isRequired,
 };
 
 Component.defaultProps = {
-  title: 'Arrastre y suelte algunos archivos aquí o haga clic para seleccionar archivos.',
+  title: 'Arrastre y suelte algunos archivos aquí o haga click para seleccionar archivos.',
   subtitle: '',
   type: 'application/pdf',
   multiple: false,
+  fileSelected: null,
+  disabled: false,
+  fileUrl: null,
 };
 
-export default Component;
+export default React.memo(Component);

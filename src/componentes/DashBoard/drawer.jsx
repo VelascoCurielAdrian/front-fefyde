@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import propTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
@@ -10,7 +10,7 @@ import { Link, useLocation } from 'react-router-dom';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemButton from '@mui/material/ListItemButton';
-import { FcHome } from 'react-icons/fc';
+import HomeIcon from '@mui/icons-material/Home';
 
 import Perfil from './profile';
 import NavItems from './navItems';
@@ -26,6 +26,10 @@ const Drawer = ({
   handleDrawerToggle,
 }) => {
   const location = useLocation();
+  const { pathname } = location;
+
+  const ruteSelected = useCallback((ruta) => (pathname.includes(ruta) ? '#BE8B3C' : '#081B3A'), [pathname]);
+
   return (
     <MuiDrawer
       container={container}
@@ -33,7 +37,7 @@ const Drawer = ({
       open={mobileOpen}
       onClose={handleDrawerToggle}
       ModalProps={{ keepMounted: true }}
-      sx={{ display: { xs: 'block', sm: 'none' }, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth } }}
+      sx={{ display: { xs: 'block', md: 'none' }, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth } }}
     >
       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
         <Perfil onLogout={onLogout} />
@@ -42,10 +46,11 @@ const Drawer = ({
           <ListItem
             disablePadding
             component={Link}
-            to="incio"
+            to="dashboard"
+            sx={{ color: ruteSelected('dashboard') }}
           >
             <ListItemButton sx={{ textAlign: 'start' }}>
-              <ListItemIcon><FcHome size={22} /></ListItemIcon>
+              <ListItemIcon sx={{ color: ruteSelected('dashboard') }}><HomeIcon /></ListItemIcon>
               <ListItemText primary="Inicio" />
             </ListItemButton>
           </ListItem>
@@ -58,10 +63,12 @@ const Drawer = ({
                   disablePadding
                   component={Link}
                   to={item.url}
-                  selected={item.url === location.pathname}
+                  sx={{
+                    color: ruteSelected(item.url),
+                  }}
                 >
                   <ListItemButton sx={{ textAlign: 'start' }}>
-                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemIcon sx={{ color: ruteSelected(item.url) }}>{item.icon}</ListItemIcon>
                     <ListItemText primary={item.label} />
                   </ListItemButton>
                 </ListItem>

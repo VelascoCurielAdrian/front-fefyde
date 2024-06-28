@@ -3,10 +3,14 @@
 @tailwind utilities;
 
 #root {
-	background-color: #f6f6e9;
+	background-color: rgb(243 244 246 / 1);
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+}
+
+.primary {
+	background: linear-gradient(90deg,#003b7e 0%,#1b68ab 48%,#1d70b8 100%);
 }
 
 .Table {
@@ -80,24 +84,6 @@
 	text-align: center;
 }
 
-tr {
-	height: 40px !important;
-}
-
-th {
-	max-width: 125px;
-	min-width: 125px;
-	padding: 0 !important;
-	overflow-x: auto;
-	white-space: nowrap;
-	text-align: center !important;
-}
-
-td {
-	height: 40px !important;
-	padding: 5px !important;
-	text-align: center !important;
-}
 
 .page {
 	position: absolute;
@@ -196,54 +182,6 @@ td {
 	}
 }
 
-/* @media (max-width: 1250px) {
-	.hero__title {
-		top: 40%;
-		font-size: 40px;
-	}
-	.footer{
-		margin-top: 129%;
-	}
-	.hero__title2 {
-		top: 30%;
-		font-size: 40px;
-	}
-}
-
-@media (max-width: 1200px) {
-	.hero__title {
-		top: 40%;
-		font-size: 30px;
-	}
-	.hero__title2 {
-		top: 30%;
-		font-size: 30px;
-	}
-}
-
-
-@media (max-width: 1000px) {
-	.hero__title {
-		top: 40%;
-		font-size: 20px;
-	}
-	.hero__title2 {
-		top: 30%;
-		font-size: 20px;
-	}
-}
-
-@media (max-width: 600) {
-	.hero__title {
-		top: 30%;
-		font-size: 15px;
-	}
-	.hero__title2 {
-		top: 30%;
-		font-size: 15px;
-	}
-} */
-
 .background {
 	position: fixed;
 	width: 100vw;
@@ -252,7 +190,7 @@ td {
 	left: 0;
 	margin: 0;
 	padding: 0;
-	background: #0d47a1;
+	background: linear-gradient(90deg,#003b7e 0%,#1b68ab 48%,#1d70b8 100%);
 	overflow: hidden;
 }
 .background li {

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { exportToExcel } from 'react-json-to-excel';
 import axios from '../configuracion/axios';
 
@@ -18,9 +19,15 @@ export const generatePassword = () => {
 
 export const encontrarElementoRepetido = (arreglo) => {
   for (let i = 0; i < arreglo.length - 1; i += 1) {
-    for (let j = i + 1; j < arreglo.length; j += 1) {
-      if (arreglo[i].toLowerCase() === arreglo[j].toLowerCase()) {
-        return arreglo[i]; // retorna el nombre repetido encontrado
+    const elementoI = arreglo[i];
+    if (elementoI !== null && elementoI !== undefined) {
+      for (let j = i + 1; j < arreglo.length; j += 1) {
+        const elementoJ = arreglo[j];
+        if (elementoJ !== null && elementoJ !== undefined) {
+          if (elementoI.toLowerCase() === elementoJ.toLowerCase()) {
+            return elementoI;
+          }
+        }
       }
     }
   }

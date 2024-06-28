@@ -1,4 +1,10 @@
 const paleta = {
+  primary: {
+    main: '#081B3A',
+    light: '#FFFF',
+    dark: '#527e4c',
+    contrastText: '#fff',
+  },
   textField: {
     text: '#657381',
     textBlack: '#33404E',
@@ -23,6 +29,9 @@ const paleta = {
   sidebar: {
     active: '#EAF0F6',
     backgroundColor: '#FFF',
+  },
+  login: {
+    main: '#081B3A',
   },
 };
 

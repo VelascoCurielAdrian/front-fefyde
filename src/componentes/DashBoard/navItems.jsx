@@ -1,40 +1,67 @@
 import React from 'react';
-import { FcConferenceCall, FcInspection } from 'react-icons/fc';
-import { BsPersonFillCheck } from 'react-icons/bs';
-import { sizeIcon } from '../../helpers/constants';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import GroupsIcon from '@mui/icons-material/Groups';
+import SchoolIcon from '@mui/icons-material/School';
+import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
+import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
+
+import {
+  permisosAdmin,
+  permisosEstudiante,
+  permisosEvaluador,
+} from '../../helpers/constants';
 
 const NavItems = [
   // Perfil Adminstrador
   {
-    seccionID: 1,
-    icon: <FcInspection size={sizeIcon} />,
+    seccionID: permisosAdmin.actividades_admin,
+    icon: <AssignmentIcon />,
     url: 'actividades',
     label: 'Actividades',
   },
   {
-    seccionID: 2,
-    icon: <FcConferenceCall size={sizeIcon} />,
+    seccionID: permisosAdmin.alumnos_admin,
+    icon: <SchoolIcon />,
     url: 'alumnos',
     label: 'Alumnos',
   },
   {
-    seccionID: 7,
-    icon: <BsPersonFillCheck size={sizeIcon} />,
+    seccionID: permisosAdmin.perfiles_admin,
+    icon: <PermContactCalendarIcon />,
     url: 'perfiles',
     label: 'Perfiles',
   },
-  // Perfil Alumno
   {
-    seccionID: 4,
-    icon: <FcInspection size={sizeIcon} />,
+    seccionID: permisosAdmin.grupos_Admin,
+    icon: <GroupsIcon />,
+    url: 'grupos',
+    label: 'Grupos',
+  },
+  {
+    seccionID: permisosAdmin.eventos_admin,
+    icon: <ChecklistRtlIcon />,
+    url: 'eventos',
+    label: 'Asistencia y eventos',
+  },
+  // Perfil Evaluador
+  {
+    seccionID: permisosEvaluador.actividades_evaluador,
+    icon: <AssignmentIcon />,
     url: 'actividades',
     label: 'Actividades',
   },
   {
-    seccionID: 5,
-    icon: <FcInspection size={sizeIcon} />,
-    url: 'misActividades',
-    label: 'Mis Actividades',
+    seccionID: permisosEvaluador.alumnos_evaluador,
+    icon: <SchoolIcon />,
+    url: 'alumnos',
+    label: 'Alumnos',
+  },
+  // Perfil Alumno
+  {
+    seccionID: permisosEstudiante.actividades_alumno,
+    icon: <AssignmentIcon />,
+    url: 'actividades',
+    label: 'Actividades',
   },
 ];
 

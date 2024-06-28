@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import { CgBrowse } from 'react-icons/cg';
+import AllInboxSharpIcon from '@mui/icons-material/AllInboxSharp';
 
 const EmptyRows = () => (
   <Box
@@ -11,11 +11,11 @@ const EmptyRows = () => (
       justifyContent: 'center',
       height: '100%',
       marginTop: 0.2,
-      color: 'gray',
       fontSize: 14,
     }}
+    className="text-slate-700"
   >
-    <CgBrowse size={50} />
+    <AllInboxSharpIcon fontSize="large" />
     <Box
       sx={{ mt: 1 }}
     >

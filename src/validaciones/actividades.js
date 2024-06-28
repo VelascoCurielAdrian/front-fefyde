@@ -1,33 +1,21 @@
 import * as yup from 'yup';
-import { isNaN } from 'lodash';
-import { MESSAGE_REQUIRED } from '../helpers/constants';
+import { MESSAGE_REQUIRED, NUMBER_POSITIVE } from '../helpers/constants';
 
 const Validacion = yup.object({
   nombre: yup.string().required(MESSAGE_REQUIRED),
-  tipoActividadID: yup
+  tipoActividadID: yup.string().required(MESSAGE_REQUIRED),
+  calificacion: yup
     .number()
-    .transform((value) => (isNaN(value) ? undefined : value))
-    .required(MESSAGE_REQUIRED),
-  semestre: yup
+    .transform((value) => (Number.isNaN(value) ? undefined : value))
+    .required(MESSAGE_REQUIRED)
+    .positive()
+    .min(0, NUMBER_POSITIVE),
+  maximoUnidades: yup
     .number()
-    .transform((value) => (isNaN(value) ? undefined : value))
-    .required(MESSAGE_REQUIRED),
-  tipoDuracion: yup
-    .number()
-    .transform((value) => (isNaN(value) ? undefined : value))
-    .required(MESSAGE_REQUIRED),
-  duracion: yup
-    .number()
-    .transform((value) => (isNaN(value) ? undefined : value))
-    .required(MESSAGE_REQUIRED),
-  minPuntos: yup
-    .number()
-    .transform((value) => (isNaN(value) ? undefined : value))
-    .required(MESSAGE_REQUIRED),
-  maxPuntos: yup
-    .number()
-    .transform((value) => (isNaN(value) ? undefined : value))
-    .required(MESSAGE_REQUIRED),
+    .transform((value) => (Number.isNaN(value) ? undefined : value))
+    .required(MESSAGE_REQUIRED)
+    .positive()
+    .min(0, NUMBER_POSITIVE),
 });
 
 export default Validacion;

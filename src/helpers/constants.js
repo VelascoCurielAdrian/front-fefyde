@@ -1,4 +1,9 @@
+import { enumEstadoActividad } from '../enums/estadoActividad';
+import { enumEstadoGrupo } from '../enums/estadoGrupo';
+import { enumHorarioAlumnos } from '../enums/horariosAlumnos';
+
 export const IS_REQUERED = 'Numero invalido';
+export const SPACE_NOT = 'No se permiten espacios';
 export const NUMBER_INVALID = 'Numero invalido';
 export const ZIP_CODE = 'Codigo postal invalido';
 export const MESSAGE_REQUIRED = 'Este campo es requerido';
@@ -7,15 +12,31 @@ export const TELEPHONE_INVALID = 'Numero télefono invalido';
 export const NUMBER_ADDRESSLINE_MIN = 'debe tener como minimo 4 caracteres';
 export const NUMBER_ADDRESSLINE_MAX = 'debe tener como maximo 4 caracteres';
 export const TELEPHONE_VALIDATE = 'El télefono debe tener como minimo 10 dígitos';
-
+export const NUMBER_POSITIVE = 'Solo se permiten numeros positivos';
 export const TipoEstatus = [
   { id: true, nombre: 'Habilitado' },
   { id: false, nombre: 'Inhabilitado' },
 ];
 
 export const Generos = [
-  { id: 1, nombre: 'Masculino', clave: 'M' },
-  { id: 2, nombre: 'Femenino', clave: 'F' },
+  { id: 1, nombre: 'Matutino', clave: 'M' },
+  { id: 2, nombre: 'Vespertino', clave: 'F' },
+];
+
+export const EstadoActividad = [
+  { id: 1, nombre: 'Aceptado', value: enumEstadoActividad.ACPETADO },
+  { id: 2, nombre: 'Pendiente', value: enumEstadoActividad.PENDIENTE },
+  { id: 3, nombre: 'Rechazado', value: enumEstadoActividad.RECHAZADO },
+];
+
+export const EstadoGrupo = [
+  { id: 1, nombre: 'Egresados', value: enumEstadoGrupo.EGRESADOS },
+  { id: 2, nombre: 'En curso', value: enumEstadoGrupo.EN_CURSO },
+];
+
+export const HorarioAlumnos = [
+  { id: 1, nombre: 'Vespertino', value: enumHorarioAlumnos.VESPERTINO },
+  { id: 2, nombre: 'Matutino', value: enumHorarioAlumnos.MATUTINO },
 ];
 
 export const Semestres = [
@@ -121,4 +142,46 @@ export const tabData = [
   },
 ];
 
-export const sizeIcon = 22;
+export const sizeIcon = 24;
+
+export const permisosAdmin = {
+  actividades_admin: 1,
+  alumnos_admin: 2,
+  configuraciones_admin: 3,
+  perfiles_admin: 4,
+  grupos_Admin: 5,
+  dashboard_admin: 6,
+  eventos_admin: 13,
+};
+
+export const permisosEstudiante = {
+  actividades_alumno: 7,
+  configuraciones_alumno: 8,
+  dashboard_alumno: 9,
+};
+
+export const permisosEvaluador = {
+  alumnos_evaluador: 10,
+  configuraciones_evaluador: 11,
+  dashboard_evaluador: 12,
+  actividades_evaluador: 14,
+};
+
+export const tiposLogoEnum = {
+  SOLO_IMAGEN: 'solo_imagen',
+  SOLO_TEXTO: 'solo_texto',
+  IMAGEN_TEXTO: 'imagen_texto',
+  IMAGEN_SOBRE_TEXTO: 'imagen_sobre_texto',
+};
+
+export const TiposAvanceAlumnos = [
+  { id: 1, nombre: 'Evidencias revisadas' },
+  { id: 2, nombre: 'Evidencias sin revisar' },
+  { id: 3, nombre: 'Nuevas evidencias' },
+];
+
+export const TiposAvanceAlumnosEnum = {
+  EVIDENCIAS_REVISADAS: 1,
+  EVIDENCIAS_SIN_REVISAR: 2,
+  NUEVAS_EVIDENCIAS: 3,
+};

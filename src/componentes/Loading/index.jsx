@@ -1,6 +1,6 @@
 import React from 'react';
 import { Backdrop } from '@mui/material';
-import { BeatLoader } from 'react-spinners';
+import { PulseLoader } from 'react-spinners';
 import { useIsFetching, useIsMutating } from '@tanstack/react-query';
 import paleta from '../../configuracion/paleta';
 
@@ -15,7 +15,7 @@ const Loading = () => {
       aria-label="Loading Spinner"
       data-testid="loader"
     >
-      <BeatLoader color={paleta.bar.primary} size={30} />
+      <PulseLoader color={paleta.bar.primary} size={25} />
     </Backdrop>
   );
 };

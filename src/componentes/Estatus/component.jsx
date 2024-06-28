@@ -7,6 +7,7 @@ const Container = styled(Chip)(() => ({
   display: 'flex',
   alignItems: 'center',
   width: 100,
+  borderRadius: 5,
 }));
 
 const Estatus = ({ value }) => (

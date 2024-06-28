@@ -1,57 +1,75 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
-/* eslint-disable import/prefer-default-export */
 import React, { useContext } from 'react';
-import {
-  Box,
-  Grid,
-  Link,
-  AppBar,
-  Toolbar,
-  Checkbox,
-  FormControlLabel,
-  Typography,
-} from '@mui/material';
-import { toast } from 'react-toastify';
-import { useMutation } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import { FcGraduationCap } from 'react-icons/fc';
-import { useNavigate } from 'react-router-dom';
+
+import { grey } from '@mui/material/colors';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+
+import Logo from '../../../componentes/Logo';
 import Button from '../../../componentes/Button';
 import Copyright from '../../../componentes/CopyRight';
+import CheckBox from '../../../componentes/Formularios/CheckBox';
+import TextField from '../../../componentes/Formularios/TextField';
+
 import { validacion } from './helper';
 import { AuthContext } from '../context';
-import { iniciarSession } from '../../../validaciones/usuarios';
-import { TextFieldController } from '../../../componentes/Formulario';
 import { setTokenHeader } from '../../axios';
-import Loading from '../../../componentes/Loading';
+import { tiposLogoEnum } from '../../../helpers/constants';
+import { iniciarSession } from '../../../validaciones/usuarios';
+
+import fondo from './fondo.png';
+import paleta from '../../paleta';
+import { ERROR } from '../../mensajes';
 
 const input = {
   usuario: '',
   password: '',
+  sessionActiva: false,
 };
 export const Login = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { isLoading, mutate } = useMutation(iniciarSession, {
-    onSuccess: (response) => {
-      login(response);
-      setTokenHeader(response.token);
-      navigate('/inicio', {
-        replace: true,
-      });
-      toast.success(`Bienvenido ${response.usuario}`);
-    },
-    onError: (e) => toast.error(e.data.errorMessage),
-  });
+
   const {
+    watch,
     control,
     handleSubmit,
     formState: { errors },
+    setError,
+    clearErrors,
   } = useForm({
     resolver: yupResolver(validacion),
     defaultValues: input,
+  });
+
+  const { mutate } = useMutation(iniciarSession, {
+    onSuccess: (response) => {
+      login({ ...response, typeSession: watch('sessionActiva') });
+      setTokenHeader(response.token);
+      navigate('/dashboard', {
+        replace: true,
+      });
+      toast.success(`Bienvenido/a ${response.usuario}`);
+      clearErrors('usuario');
+      clearErrors('password');
+    },
+    onError: (error) => {
+      if (error.data.type === 'userName') {
+        setError('usuario', { type: 'custom', message: error.data.message });
+      } else if (error.data.type === 'password') {
+        setError('password', { type: 'custom', message: error.data.message });
+      } else {
+        toast.error(ERROR);
+      }
+    },
   });
 
   const onSubmit = (data) => {
@@ -59,65 +77,86 @@ export const Login = () => {
   };
 
   return (
-    <>
-      <Box
-        sx={{ flexGrow: 1, backgroundColor: '#ffff' }}
-      >
-        <AppBar position="static">
-          <Toolbar>
-            <Typography className="block text-sm font-medium text-gray-100">
-              SISTEMA DE CRÉDITOS DE LIBRE ELECCIÓN
+    <Box sx={{ flexGrow: 1, backgroundColor: '#ffff' }}>
+      <Grid container component="main" sx={{ height: '100vh' }}>
+        <CssBaseline />
+        <Grid
+          item
+          lg={8}
+          md={8}
+          sm={6}
+          xs={false}
+          sx={{
+            backgroundImage: `url(${fondo})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: (t) => (t.palette.mode === 'light'
+              ? t.palette.grey[50]
+              : t.palette.grey[900]),
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <Grid
+          item
+          lg={4}
+          md={4}
+          sm={6}
+          xs={12}
+          component={Paper}
+          elevation={6}
+          square
+        >
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <Logo
+              color={paleta.login.main}
+              tipoLogo={tiposLogoEnum.SOLO_IMAGEN}
+              size={120}
+              link
+            />
+            <Typography component="h1" variant="h5" textAlign="start">
+              Inicio de Sesión
             </Typography>
-          </Toolbar>
-        </AppBar>
-        <div className="h-full w-full flex items-center justify-center py-3 px-6 sm:px-6 lg:px-8">
-          <Box className="max-w-md w-full h-full">
-            <FcGraduationCap className="mx-auto w-auto" size={100} />
-            <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
-              <TextFieldController
+            <Typography
+              component="h1"
+              variant="p"
+              textAlign="start"
+              sx={{ color: grey[600] }}
+            >
+              Identifícate para ingresar a tu cuenta.
+            </Typography>
+            <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-4">
+              <TextField
                 autoFocus
                 control={control}
                 name="usuario"
                 error={errors.usuario}
                 label="Usuario"
               />
-              <TextFieldController
+              <TextField
                 control={control}
                 name="password"
                 type="password"
                 error={errors.password}
                 label="Contraseña"
               />
-              <FormControlLabel
-                className="text-gray-500 dark:text-gray-400"
-                control={<Checkbox onChange={() => {}} />}
-                label="Recordar credenciales"
+              <CheckBox
+                label="Mantener sesión activa"
+                name="sessionActiva"
+                control={control}
               />
-              <Button label="Iniciar Sessión" isSubmit fullWidth />
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    {' '}
-                    ¿Se te olvidó tu contraseña?
-                    {' '}
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {' '}
-                    ¿No tienes una cuenta? inscríbete
-                    {' '}
-                  </Link>
-                </Grid>
-              </Grid>
+              <Button label="Iniciar sesión" isSubmit fullWidth />
             </form>
-            <Copyright
-              sx={{ mt: 8, mb: 4 }}
-            />
           </Box>
-        </div>
-      </Box>
-      <Loading loading={isLoading} />
-    </>
+          <Copyright sx={{ mt: 10 }} />
+        </Grid>
+      </Grid>
+    </Box>
   );
 };

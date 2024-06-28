@@ -7,7 +7,7 @@ import {
 
 import iconWoman from '../../assets/student_woman.png';
 import iconMan from '../../assets/student-man.png';
-import { Generos } from '../../helpers/constants';
+import { EstadoActividad } from '../../helpers/constants';
 
 const InfoAlumno = ({ info }) => (
   <Grid container spacing={2}>
@@ -16,7 +16,7 @@ const InfoAlumno = ({ info }) => (
         component="img"
         alt="green iguana"
         sx={{ width: 310, margin: 3, borderRadius: 2 }}
-        image={Generos.find((el) => el.id === info?.genero)?.nombre === 'Masculino' ? iconMan : iconWoman}
+        image={EstadoActividad.find((el) => el.id === info?.genero)?.nombre === 'Masculino' ? iconMan : iconWoman}
       />
     </Grid>
     <Grid item lg={9} md={9} sm={10}>
@@ -106,7 +106,7 @@ const InfoAlumno = ({ info }) => (
             Género
           </Typography>
           <Typography variant="subtitle2" sx={{ fontSize: 12 }}>
-            {Generos.find((el) => el.id === info?.genero)?.nombre}
+            {EstadoActividad.find((el) => el.id === info?.genero)?.nombre}
           </Typography>
         </Grid>
       </Grid>

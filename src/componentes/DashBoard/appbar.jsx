@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import propTypes from 'prop-types';
 import Box from '@mui/material/Box';
-import { Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import Popover from '@mui/material/Popover';
 import Toolbar from '@mui/material/Toolbar';
 import AppBarMui from '@mui/material/AppBar';
-import { Typography } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 
-import { BiMenu } from 'react-icons/bi';
-import { FcPortraitMode, FcHome } from 'react-icons/fc';
-import Button from '../Button';
+import MenuIcon from '@mui/icons-material/Menu';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import HomeIcon from '@mui/icons-material/Home';
+
+import Logo from '../Logo';
 import Perfil from './profile';
 import NavItems from './navItems';
-import { sizeIcon } from '../../helpers/constants';
+
+import { tiposLogoEnum } from '../../helpers/constants';
+import paleta from '../../configuracion/paleta';
 
 const AppBar = ({
   id,
@@ -24,83 +30,103 @@ const AppBar = ({
   handleOpen,
   handleClose,
   handleClick,
-}) => (
-  <AppBarMui component="nav">
-    <Toolbar>
-      <IconButton
-        edge="start"
-        color="inherit"
-        onClick={handleOpen}
-        sx={{ mr: 2, display: { sm: 'none' } }}
-      >
-        <BiMenu />
-      </IconButton>
-      <Box
-        component="div"
-        sx={{ flexGrow: 1, display: { xs: 'none', md: 'block' } }}
-      >
-        <Typography
-          style={{ fontWeight: '700', fontSize: 12 }}
-          className="block text-gray-100"
+}) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { breakpoints } = useTheme();
+  const matches = useMediaQuery(breakpoints.down('md'));
+  const [value, setValue] = useState('dashboard');
+
+  const handleChange = (event, newValue) => {
+    navigate(newValue);
+    setValue(newValue);
+  };
+
+  useLayoutEffect(() => {
+    const ruta = NavItems.find((seccion) => location.pathname.includes(seccion.url));
+    if (ruta) {
+      setValue(ruta.url);
+    }
+  }, [location.pathname]);
+
+  return (
+    <AppBarMui component="nav" color="secondary" elevation={0} position="fixed">
+      <Toolbar>
+        {matches && (
+          <IconButton
+            edge="start"
+            color="inherit"
+            onClick={handleOpen}
+          >
+            <MenuIcon color="primary" />
+          </IconButton>
+        )}
+        <Box
+          component="div"
+          sx={{ display: { md: 'block' }, flexGrow: !matches ? 'none' : 1 }}
         >
-          SISTEMA DE CRÉDITOS DE LIBRE ELECCIÓN
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          display: {
-            mr: 1, xs: 'none', sm: 'block', marginLeft: 'auto',
-          },
-        }}
-      >
-        <Button
-          sx={{ mr: 1, color: '#FFFF' }}
-          size="small"
-          component={Link}
-          url="Inicio"
-          label="Inicio"
-          icono={<FcHome size={sizeIcon} />}
-          variant="text"
-        />
-        {
-          NavItems.map((item) => {
-            const seccion = secciones.find((seccionID) => seccionID === item.seccionID);
-            if (seccion) {
-              return (
-                <Button
-                  key={item.seccionID}
-                  sx={{ mr: 1, color: '#FFFF' }}
-                  size="small"
-                  component={Link}
-                  url={item.url}
-                  label={item.label}
-                  icono={item.icon}
-                  variant="text"
-                />
-              );
-            }
-            return null;
-          })
-        }
-      </Box>
-      <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-        <IconButton onClick={handleClick}>
-          <FcPortraitMode size={30} />
-        </IconButton>
-        <Popover
-          id={id}
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          <Logo
+            color={paleta.primary.main}
+            tipoLogo={tiposLogoEnum.IMAGEN_TEXTO}
+            size={30}
+            link
+          />
+        </Box>
+        {!matches && (
+          <Box
+            sx={{
+              marginRight: '50px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexGrow: 1,
+            }}
+          >
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              variant="scrollable"
+              scrollButtons="auto"
+            >
+              <Tab value="dashboard" label="Inicio" icon={<HomeIcon />} />
+              {NavItems.map((item) => {
+                const seccion = secciones.find((seccionID) => seccionID === item.seccionID);
+                return (
+                  seccion && (
+                    <Tab
+                      key={item.seccionID}
+                      value={item.url}
+                      label={item.label}
+                      icon={item.icon}
+                    />
+                  )
+                );
+              })}
+            </Tabs>
+          </Box>
+        )}
+
+        <Box
+          sx={{ display: { xs: 'none', sm: 'block', alignItems: 'center' } }}
         >
-          <Perfil onLogout={onLogout} />
-        </Popover>
-      </Box>
-    </Toolbar>
-  </AppBarMui>
-);
+          <IconButton onClick={handleClick}>
+            <AccountBoxIcon color="primary" />
+          </IconButton>
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          >
+            <Perfil onLogout={onLogout} />
+          </Popover>
+        </Box>
+      </Toolbar>
+    </AppBarMui>
+  );
+};
 
 AppBar.propTypes = {
   id: propTypes.string,

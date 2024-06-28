@@ -3,11 +3,10 @@ import propTypes from 'prop-types';
 import { Button } from '@mui/material';
 
 const Component = ({
-  sx, url, label, size, icono, variant,
-  onClick, disabled, isSubmit, fullWidth, component,
+  url, label, size, icono, variant,
+  onClick, disabled, isSubmit, fullWidth, component, ...rest
 }) => (
   <Button
-    sx={sx}
     to={url}
     size={size}
     startIcon={icono}
@@ -17,6 +16,7 @@ const Component = ({
     component={component}
     fullWidth={fullWidth}
     type={isSubmit ? 'submit' : 'button'}
+    {...rest}
   >
     {label}
   </Button>
@@ -24,7 +24,6 @@ const Component = ({
 
 Component.propTypes = {
   url: propTypes.string,
-  sx: propTypes.oneOfType([propTypes.object]),
   component: propTypes.elementType,
   label: propTypes.string,
   icono: propTypes.element,
@@ -39,7 +38,6 @@ Component.propTypes = {
 Component.defaultProps = {
   label: '',
   size: '10px',
-  sx: undefined,
   variant: 'contained',
   fullWidth: false,
   icono: null,

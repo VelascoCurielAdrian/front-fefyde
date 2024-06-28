@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import * as xlsx from 'xlsx';
 import PropTypes from 'prop-types';
-import { MdCancel } from 'react-icons/md';
-import { RiFileCopy2Line } from 'react-icons/ri';
-import { BsFileMedicalFill } from 'react-icons/bs';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import Button from '../Button';
 
 const UploadFile = ({
   type,
@@ -62,9 +63,9 @@ const UploadFile = ({
 
   return (
     <>
-      <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+      <div className="mt-3 mb-4 flex justify-center rounded-md border-2 border-dashed border-slate-700 bg-slate-100 px-6 pt-5 pb-6">
         {filePreview !== '' ? (
-          <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-50">
+          <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-500 group-hover:opacity-75 lg:aspect-none lg:h-50">
             {file.type === 'image/png' || file.type === 'image/jpg' ? (
               <img
                 src={filePreview}
@@ -73,11 +74,11 @@ const UploadFile = ({
               />
             ) : (
               <div className="space-y-1 p-2 text-center">
-                <RiFileCopy2Line
-                  className="mx-auto h-12 w-12 text-blue-800"
+                <Inventory2Icon
+                  className="mx-auto h-12 w-12 text-white"
                   stroke="currentColor"
                 />
-                <p className="text-md text-gray-500">
+                <p className="text-md text-gray-50">
                   {`Archivo: ${file.name}`}
                 </p>
               </div>
@@ -101,12 +102,12 @@ const UploadFile = ({
             </svg>
             <div className="flex text-sm text-gray-600">
               <label
-                htmlFor="file-upload"
-                className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
+                htmlFor="SubidaArchivo"
+                className="relative cursor-pointer rounded-md bg-slate-200 font-medium text-slate-800 focus-within:outline-none focus-within:ring-2 focus-within:ring-slate-600 focus-within:ring-offset-2 hover:text-slate-600"
               >
                 <span>Subir Archivo</span>
                 <input
-                  id="file-upload"
+                  id="SubidaArchivo"
                   name="file-upload"
                   type="file"
                   className="sr-only"
@@ -120,27 +121,22 @@ const UploadFile = ({
           </div>
         )}
       </div>
-      <div className="flex">
-        <button
+      <div className="flex space-x-3 mb-3">
+        <Button
+          size="medium"
+          variant="outlined"
           onClick={handleClose}
-          type="button"
-          className="h-auto w-25 ml-2 inline-flex items-center rounded-md border border-transparent bg-red-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        >
-          <MdCancel className="-ml-2 mr-2 h-4 w-5" aria-hidden="true" />
-          Cancelar
-        </button>
+          icono={<CancelIcon size={18} />}
+          label="Cancelar"
+        />
         {plantilla && (
-        <button
-          onClick={handlePlantilla}
-          type="button"
-          className="h-auto w-25 ml-2 inline-flex items-center rounded-md border border-transparent bg-blue-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        >
-          <BsFileMedicalFill
-            className="-ml-2 mr-2 h-4 w-5"
-            aria-hidden="true"
+          <Button
+            size="medium"
+            variant="contained"
+            onClick={handlePlantilla}
+            icono={<CloudDownloadIcon size={18} />}
+            label="Descargar plantilla"
           />
-          Descargar plantilla
-        </button>
         )}
       </div>
     </>
