@@ -7,11 +7,11 @@ const Copyright = (props) => (
     {'Copyright © '}
     <Link
       color={props?.color}
-      href="https://fic.uas.edu.mx/"
+      href="https://carreras.uas.edu.mx/Educacion_Deportiva.html"
       rel="noopener noreferrer"
       target="_blank"
     >
-      Facultad de informática
+      Facultad de Educación Física y Deporte
     </Link>
     {' '}
     {new Date().getFullYear()}

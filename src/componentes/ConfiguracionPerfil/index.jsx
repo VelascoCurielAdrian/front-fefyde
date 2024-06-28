@@ -138,17 +138,10 @@ const Component = () => {
                     Acerca de nosotros
                   </dt>
                   <dd className="mt-1 text-sm leading-6 text-justify text-gray-700 sm:col-span-2 sm:mt-0">
-                    Este valioso sistema, generosamente donado por los dedicados
-                    alumnos
+                    Este valioso sistema, generosamente donado por los dedicado
+                    alumno
                     {' '}
                     <strong>Adrian Velasco Curiel</strong>
-                    ,
-                    {' '}
-                    <strong>Angel Yair Ayón Verdugo</strong>
-                    {' '}
-                    y
-                    {' '}
-                    <strong>Osiel Rocha Armenta</strong>
                     , se destaca por su
                     función esencial: facilitar la incorporación del valor
                     crediticio de las actividades de libre elección en el
@@ -162,13 +155,6 @@ const Component = () => {
                     resumen, este sistema, fruto del compromiso y altruismo de
                     {' '}
                     <strong>Adrian Velasco Curiel</strong>
-                    ,
-                    {' '}
-                    <strong>Angel Yair Ayón Verdugo</strong>
-                    {' '}
-                    y
-                    {' '}
-                    <strong>Osiel Rocha Armenta</strong>
                     , representa un avance
                     significativo para la gestión académica, brindando una
                     solución valiosa para el seguimiento y registro de las

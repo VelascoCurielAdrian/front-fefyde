@@ -68,7 +68,7 @@ const AppBar = ({
           <Logo
             color={paleta.primary.main}
             tipoLogo={tiposLogoEnum.IMAGEN_TEXTO}
-            size={30}
+            size={20}
             link
           />
         </Box>

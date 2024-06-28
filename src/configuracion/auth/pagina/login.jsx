@@ -117,11 +117,11 @@ export const Login = () => {
             <Logo
               color={paleta.login.main}
               tipoLogo={tiposLogoEnum.SOLO_IMAGEN}
-              size={120}
+              size={130}
               link
             />
             <Typography component="h1" variant="h5" textAlign="start">
-              Inicio de Sesión
+              Inicio de sesión
             </Typography>
             <Typography
               component="h1"
