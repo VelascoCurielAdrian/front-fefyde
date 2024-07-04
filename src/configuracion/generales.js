@@ -3,9 +3,7 @@ import { toast } from 'react-toastify';
 import { ERROR } from './mensajes';
 
 export const generales = {
-  // baseUrldev: 'http://localhost:4001',
-  // ip del servidor
-  baseUrldev: 'https://sistemasfic.uas.edu.mx',
+  baseUrldev: 'https://back-fefyde.onrender.com',
   admin: 'Administrador',
   carrera: 'Carrera',
   student: 'Estudiante',
